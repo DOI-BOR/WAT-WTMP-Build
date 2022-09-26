@@ -74,7 +74,7 @@ dependencies {
 
     wat_plugins "mil.army.usace.hec.wat:wat-plugin-cequalw2:${wat_version}"
 
-    ressim_install 'mil.army.usace.hec.ressim:hec-ressim:4.0.0.QA-835-Not_For_Public_Release_zip@zip'
+    ressim_install 'mil.army.usace.hec.ressim:hec-ressim:4.0.0.QA-839-Not_For_Public_Release@zip'
 
     usbr_plugins 'usbr.wat.plugins:usbr-actionpanel-plugin:0.0.2-SNAPSHOT'
     usbr_plugins 'usbr.wat.plugins:usbr-comparison-report:0.0.2-SNAPSHOT'
