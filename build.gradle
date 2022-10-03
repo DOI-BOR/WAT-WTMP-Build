@@ -204,12 +204,12 @@ task assembleInstaller(type: Sync) { task ->
         }
     }
 
-    task.into("WTMP/HEC-WAT/report") { intoDir ->
+    task.into("WTMP/HEC-WAT/reports/jasper") { intoDir ->
         configurations.usbr_jasper.asFileTree.each { zipFile ->
             intoDir.from(zipTree(zipFile)) { zipFileTree ->
                 zipFileTree.eachFile { fcd ->
                     def segmentList = fcd.relativePath.segments.toList()
-                    segmentList.remove(3)
+                    segmentList.remove(4)
                     fcd.relativePath = new RelativePath(true, (String[])segmentList.toArray())
                 }
                 zipFileTree.includeEmptyDirs = false
