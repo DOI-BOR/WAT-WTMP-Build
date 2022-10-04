@@ -118,11 +118,11 @@ configurations {
 // WAT and upstream WAT Plugin Version
 ext.wat_version = '1.1-DevNetAlpha-6'
 // USBR Plugins and Python Version
-ext.usbr_version = "0.0.2"
+ext.usbr_version = "0.0.3"
 // USBR Git Tool Version
 ext.usbr_git_version = "2.0.0-SNAPSHOT"
 // ResSim Version
-ext.ressim_version = "4.0.0.QA-839-Not_For_Public_Release"
+ext.ressim_version = "4.0.0.QA-844-Not_For_Public_Release"
 
 dependencies {
     wat_install "mil.army.usace.hec.wat:wat-install-package:${wat_version}@zip"
@@ -205,7 +205,7 @@ task assembleInstaller(type: Sync) { task ->
         }
     }
 
-    task.into("WTMP/HEC-WAT/reports/jasper") { intoDir ->
+    task.into("WTMP/reports/jasper") { intoDir ->
         configurations.usbr_jasper.asFileTree.each { zipFile ->
             intoDir.from(zipTree(zipFile)) { zipFileTree ->
                 zipFileTree.eachFile { fcd ->
