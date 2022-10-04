@@ -19,9 +19,9 @@ build-install-package:
       files:
         - gradle/wrapper/gradle-wrapper.properties
     paths:
-      - cache/caches/
-      - cache/notifications/
-      - cache/wrapper/
+      - cache/caches/**
+      - cache/notifications/**
+      - cache/wrapper/**
 
 
 deploy-to-nexus:
@@ -41,6 +41,6 @@ deploy-to-nexus:
       files:
         - gradle/wrapper/gradle-wrapper.properties
     paths:
-      - cache/caches/
-      - cache/notifications/
-      - cache/wrapper/
+      - cache/caches/**
+      - cache/notifications/**
+      - cache/wrapper/**

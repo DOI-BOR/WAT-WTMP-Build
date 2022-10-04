@@ -42,3 +42,6 @@ RTS-Plugins/*/build/*
 /*.prefs
 
 .idea/
+
+# Build system Gradle cache
+cache/*
