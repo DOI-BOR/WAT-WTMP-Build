@@ -210,7 +210,7 @@ task assembleInstaller(type: Sync) { task ->
             intoDir.from(zipTree(zipFile)) { zipFileTree ->
                 zipFileTree.eachFile { fcd ->
                     def segmentList = fcd.relativePath.segments.toList()
-                    segmentList.remove(4)
+                    segmentList.remove(3)
                     fcd.relativePath = new RelativePath(true, (String[])segmentList.toArray())
                 }
                 zipFileTree.includeEmptyDirs = false
