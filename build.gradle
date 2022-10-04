@@ -142,7 +142,7 @@ dependencies {
 
     usbr_jasper "usbr.wat.plugins:usbr-actionpanel-jasper:${usbr_version}@zip"
 
-    usbr_python_report 'usbr.wat.plugins:usbr-actionpanel-python:0.0.1-SNAPSHOT@zip'
+    usbr_python_report "usbr.wat.plugins:usbr-actionpanel-python:${usbr_version}@zip"
 
     usbr_python_git "usbr.wat.plugins:usbr-wtmp-git-tool:${usbr_git_version}@zip"
 
