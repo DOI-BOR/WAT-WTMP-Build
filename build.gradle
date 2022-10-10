@@ -120,7 +120,7 @@ ext.wat_version = '1.1-DevNetAlpha-8'
 // USBR Plugins and Python Version
 ext.usbr_version = "0.0.4"
 // USBR Git Tool Version
-ext.usbr_git_version = "2.0.0-SNAPSHOT"
+ext.usbr_git_version = "3.2.3"
 // ResSim Version
 ext.ressim_version = "4.0.0.QA-844-Not_For_Public_Release"
 
