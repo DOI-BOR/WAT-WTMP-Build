@@ -341,6 +341,11 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifactId = "usbr-wtmp-package"
+            def verWithExt = getShortVersionName() + "-win-x86_64"
+            if(project.version.contains("SNAPSHOT")) {
+                verWithExt += "-SNAPSHOT"
+            }
+            it.version = verWithExt
             artifact source: wtmpInstaller, extension: 'zip'
         }
     }
