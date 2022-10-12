@@ -27,7 +27,6 @@ build-install-package:
 deploy-to-nexus:
   stage: deploy
   script:
-    - git status
     - ./gradlew publish -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon --build-cache --gradle-user-home cache/
   dependencies:
     - build-install-package
