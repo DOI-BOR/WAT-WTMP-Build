@@ -105,6 +105,10 @@ configurations {
     cequalw2_exe
     // The TCD Variant required sometimes
     cequalw2_TCD_exe
+    // CeQualW2 4.5 executable set
+    cequalw2_45_exes
+    // Extra Jars
+    addl_wat_jars
     // The USBR WAT Plugins
     usbr_plugins
     // Python Report Generating code
@@ -123,6 +127,8 @@ ext.usbr_version = "0.0.7"
 ext.usbr_git_version = "3.2.3"
 // ResSim Version
 ext.ressim_version = "4.0.0.QA-844-Not_For_Public_Release"
+// USBR Fonts Version
+ext.jasper_fonts_version = "1.0"
 
 dependencies {
     wat_install "mil.army.usace.hec.wat:wat-install-package:${wat_version}@zip"
@@ -142,6 +148,7 @@ dependencies {
     usbr_plugins "usbr.wat.plugins:usbr-simulation-report:${usbr_version}"
 
     usbr_jasper "usbr.wat.plugins:usbr-actionpanel-jasper:${usbr_version}@zip"
+    addl_wat_jars "gov.usbr:usbr-jasper-fonts:${jasper_fonts_version}"
 
     usbr_python_report "usbr.wat.plugins:usbr-actionpanel-python:${usbr_version}@zip"
 
@@ -194,6 +201,11 @@ task assembleInstaller(type: Sync) { task ->
                 zipTree.exclude '**/*.config'
             }
         }
+    }
+
+    // Additional jars into WAT/jar (eg Jasper fonts)
+    task.into("WTMP/HEC-WAT/jar") { intoDir ->
+        from configurations.addl_wat_jars.setTransitive(false).copy()
     }
 
     // The plugin jars go in jar/ext
