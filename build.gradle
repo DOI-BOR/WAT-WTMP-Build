@@ -141,6 +141,10 @@ dependencies {
     cequalw2_exe 'edu.pdx.ce.w2:w2:4.0-win-x86_64@exe'
     cequalw2_TCD_exe 'edu.pdx.ce.w2:w2:4.1-TCD-d7-win-x86_64@exe'
 
+    cequalw2_45_exes 'edu.pdx.ce.w2:w2:4.5-win-x86_64@exe'
+    cequalw2_45_exes 'edu.pdx.ce.w2:w2-pre-console:4.5-win-x86_64@exe'
+    cequalw2_45_exes 'edu.pdx.ce.w2:w2-pre:4.5-win-x86_64'
+
     ressim_install "mil.army.usace.hec.ressim:hec-ressim:${ressim_version}@zip"
 
     usbr_plugins "usbr.wat.plugins:usbr-actionpanel-plugin:${usbr_version}"
@@ -289,6 +293,11 @@ task assembleInstaller(type: Sync) { task ->
             // Explicitly named as the WAT Plugin looks for this.
             fromFile.rename { "W2_Post3.exe" }
         }
+    }
+
+    task.into("WTMP/apps/ceQualW2/exec_45") { intoDir ->
+        // These will take whatever name is grabbed out of Nexus
+        intoDir.from configurations.cequalw2_45_exes
     }
 
     // There will be duplicates between WAT and the plugins. Just ignore them for now.
