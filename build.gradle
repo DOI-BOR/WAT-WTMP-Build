@@ -120,7 +120,7 @@ configurations {
 }
 
 // WAT and upstream WAT Plugin Version
-ext.wat_version = '1.1-DevNetAlpha-8'
+ext.wat_version = '1.1-DevNetAlpha-15'
 // USBR Plugins and Python Version
 ext.usbr_version = "0.0.8"
 // USBR Git Tool Version
