@@ -131,7 +131,7 @@ ext.ressim_version = "4.0.0.QA-844-Not_For_Public_Release"
 ext.jasper_fonts_version = "1.0"
 
 dependencies {
-    wat_install "mil.army.usace.hec.wat:wat-install-package:${wat_version}@zip"
+    wat_install "mil.army.usace.hec.wat:wat-install-package:${wat_version}-win-x86_64@zip"
 
     wat_plugins "mil.army.usace.hec.wat:wat-plugin-cequalw2:${wat_version}"
     wat_plugins "mil.army.usace.hec.wat:wat-plugin-ressim-4.0:${wat_version}"
