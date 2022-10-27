@@ -161,6 +161,14 @@ dependencies {
     configurations.usbr_plugins.exclude group: "mil.army.usace.hec.wat"
 }
 
+configurations.all {
+    // This results in a duplicate jar if anything depends on just plain Jython (eg compile-time needs
+    // access to Jython APIs) because WAT uses jython-standalone. Both jython and jython-standalone on
+    // the classpath results in script failures. Exclude Jython, in favor of WAT's jython-standalone which
+    // contains a superset of jython.
+    exclude group: 'org.python', module: 'jython'
+}
+
 static boolean filterOriginalWatZip(FileVisitDetails fvd) {
     // We don't use FIA, HMS, and swap WAT's ResSim 2.5 for ResSim 4.0.
     def path = fvd.getRelativePath();
