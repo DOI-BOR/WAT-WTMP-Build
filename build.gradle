@@ -122,7 +122,7 @@ configurations {
 // WAT and upstream WAT Plugin Version
 ext.wat_version = '1.1-DevNetAlpha-16'
 // USBR Plugins and Python Version
-ext.usbr_version = "0.0.14"
+ext.usbr_version = "0.0.15"
 // USBR Git Tool Version
 ext.usbr_git_version = "3.2.4"
 // ResSim Version
