@@ -7,7 +7,7 @@ stages:
 build-install-package:
   stage: build
   script:
-    - ./gradlew wtmpInstaller -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon --build-cache --gradle-user-home cache/
+    - ./gradlew showGit wtmpInstaller -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon --build-cache --gradle-user-home cache/
   artifacts:
     paths:
       - build/**
