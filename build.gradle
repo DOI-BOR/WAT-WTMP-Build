@@ -141,7 +141,7 @@ dependencies {
     w2_pre_exe 'edu.pdx.ce.w2:w2-pre:4.0-win-x86_64@exe'
     w2_post_exe 'edu.pdx.ce.w2:w2-post:3.0-win-x86_64@exe'
     cequalw2_exe 'edu.pdx.ce.w2:w2:4.0-win-x86_64@exe'
-    cequalw2_TCD_exe 'edu.pdx.ce.w2:w2:4.1-TCD-d7-win-x86_64@exe'
+    cequalw2_TCD_exe 'edu.pdx.ce.w2:w2:4.1-TCD-mp-win-x86_64@exe'
 
     cequalw2_45_exes 'edu.pdx.ce.w2:w2:4.5-win-x86_64@exe'
     cequalw2_45_exes 'edu.pdx.ce.w2:w2-pre-console:4.5-win-x86_64@exe'
