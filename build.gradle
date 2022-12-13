@@ -120,7 +120,7 @@ configurations {
 }
 
 // WAT and upstream WAT Plugin Version
-ext.wat_version = '1.1-DevNetAlpha-16'
+ext.wat_version = '1.1-DevNetAlpha-17'
 // USBR Plugins and Python Version
 ext.usbr_version = "0.0.18"
 // USBR Git Tool Version
@@ -174,11 +174,11 @@ configurations.all {
 static boolean filterOriginalWatZip(FileVisitDetails fvd) {
     // We don't use FIA, HMS, and swap WAT's ResSim 2.5 for ResSim 4.0.
     def path = fvd.getRelativePath();
-    return path.contains("/apps/") || path.contains("S25FIAPlugin.jar") 
-            || path.contains("S10HMSPlugin") || path.contains("S15ResSimPlugin-v3.5") 
-            || path.contains("S20RASPlugin") || path.contains("fcPlugin-1.1-")
-            || path.contains("hsPlugin-1.1-") || path.contains("sdi-1.1-")
-            || path.contains("pm-1.1-)
+    return path.contains("/apps/") || path.contains("S25FIAPlugin.jar") ||
+            path.contains("S10HMSPlugin") || path.contains("S15ResSimPlugin-v3.5") ||
+            path.contains("S20RASPlugin") || path.contains("fcPlugin-1.1-") ||
+            path.contains("hsPlugin-1.1-") || path.contains("sdi-1.1-") ||
+            path.contains("pm-1.1-)
 }
 
 task assembleInstaller(type: Sync) { task ->
