@@ -180,7 +180,7 @@ static boolean filterOriginalWatZip(FileVisitDetails fvd) {
             path.contains("S10HMSPlugin") || path.contains("S15ResSimPlugin-v3.5") ||
             path.contains("S20RASPlugin") || path.contains("fcPlugin-1.1-") ||
             path.contains("hsPlugin-1.1-") || path.contains("sdi-1.1-") ||
-            path.contains("pm-1.1-")
+            path.contains("pm-1.1-") || path.contains("wat-plugin-ressim-3.5")
 }
 
 task assembleInstaller(type: Sync) { task ->
