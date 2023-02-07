@@ -132,7 +132,7 @@ ext.ressim_plugin_version = "1.1-DevNetAlpha-16"
 // USBR Fonts Version
 ext.jasper_fonts_version = "1.0"
 // CeQualW2 Plugin Version
-ext.cequalw2_plugin_version = "2.0.4"
+ext.cequalw2_plugin_version = "2.0.5"
 
 dependencies {
     wat_install "mil.army.usace.hec.wat:wat-install-package:${wat_version}-win-x86_64@zip"
