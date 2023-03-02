@@ -126,9 +126,9 @@ ext.usbr_version = "0.0.21"
 // USBR Git Tool Version
 ext.usbr_git_version = "3.3.4"
 // ResSim Version
-ext.ressim_version = "4.0.0.QA-858-Not_For_Public_Release"
+ext.ressim_version = "4.0.0.QA-941-Not_For_Public_Release"
 // ResSim Plugin Version
-ext.ressim_plugin_version = "1.1-DevNetAlpha-16"
+ext.ressim_plugin_version = "2.0.0"
 // USBR Fonts Version
 ext.jasper_fonts_version = "1.0"
 // CeQualW2 Plugin Version
