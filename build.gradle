@@ -291,7 +291,29 @@ task assembleInstaller(type: Sync) { task ->
                     segmentList.remove(3)
                     fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
                 }
+                // TODO: ResSim 4.0 JavaDocs causes slow extractions on some machines.
+                zipFileTree.exclude { path -> path.getRelativePath().contains("javaDocs") }
                 zipFileTree.includeEmptyDirs = false
+            }
+        }
+    }
+
+    // TODO: ResSim 4.0 JavaDocs causes slow extractions on some machines.
+    // TODO: Instead, grab the 3.5 JavaDocs from ResSim in WAT.
+    // This is a hack until the ResSim 4.0 build can be updated to limit the Javadocs scope
+    task.into("WTMP/apps/HEC-ResSim/javaDocs") { intoDir ->
+        configurations.wat_install.asFileTree.each { zipFile ->
+            intoDir.from(zipTree(zipFile)) { zipTree ->
+                zipTree.include '**/HEC-ResSim/javaDocs/**'
+                zipTree.eachFile { fcd ->
+                    def segmentList = fcd.relativePath.segments.toList()
+                    segmentList.remove(7)
+                    segmentList.remove(6)
+                    segmentList.remove(5)
+                    segmentList.remove(4)
+                    fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
+                }
+                zipTree.includeEmptyDirs = false
             }
         }
     }
