@@ -2,9 +2,9 @@
 wat = { strictly = "1.1-DevNetAlpha-20" }
 
 # wat plugins
-usbr-plugin = { strictly = "0.0.29" }
+usbr-plugin = { strictly = "0.0.30" }
 cequal-plugin = { strictly = "2.0.6" }
-ressim-plugin = { strictly = "2.0.0" }
+ressim-plugin = { strictly = "2.0.1" }
 
 # usbr git tool
 usbr-git = {strictly = "3.3.4"}
