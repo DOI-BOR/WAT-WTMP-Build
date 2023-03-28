@@ -197,7 +197,8 @@ task assembleInstaller(type: Sync) { task ->
                                "# +--------------------------+\n" +
                                "# | WTMP Specific Parameters |\n" +
                                "# +--------------------------+\n" +
-                               "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT")
+                               "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT" + 
+                               "vmparam -Dw2.iterative.compute=true")
                     }
                     return updatedLine
                 }}
