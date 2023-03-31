@@ -243,42 +243,21 @@ task assembleInstaller(type: Sync) { task ->
         from configurations.usbr_plugins.setTransitive(true).copyRecursive() - configurations.usbr_plugins.setTransitive(false).copy()
     }
 
-    task.into("WTMP/HEC-WAT/AutomatedReport") { intoDir ->
+    task.into("WTMP") { intoDir ->
         configurations.usbr_python_report.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipFileTree ->
-                zipFileTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    segmentList.remove(3)
-                    fcd.relativePath = new RelativePath(true, (String[])segmentList.toArray())
-                }
-                zipFileTree.includeEmptyDirs = false
-            }
+            intoDir.from(zipTree(zipFile))
         }
     }
 
-    task.into("WTMP/reports/jasper") { intoDir ->
+    task.into("WTMP") { intoDir ->
         configurations.usbr_jasper.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipFileTree ->
-                zipFileTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    segmentList.remove(3)
-                    fcd.relativePath = new RelativePath(true, (String[])segmentList.toArray())
-                }
-                zipFileTree.includeEmptyDirs = false
-            }
+            intoDir.from(zipTree(zipFile))
         }
     }
 
-    task.into("WTMP/tools") { intoDir ->
+    task.into("WTMP") { intoDir ->
         configurations.usbr_python_git.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipFileTree ->
-                zipFileTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    segmentList.remove(2)
-                    fcd.relativePath = new RelativePath(true, (String[])segmentList.toArray())
-                }
-                zipFileTree.includeEmptyDirs = false
-            }
+            intoDir.from(zipTree(zipFile))
         }
     }
 
