@@ -7,7 +7,7 @@ cequal-plugin = { strictly = "2.1.0" }
 ressim-plugin = { strictly = "2.0.0" }
 
 # usbr git tool
-usbr-git = { strictly = "3.3.5" }
+usbr-git = { strictly = "3.3.6" }
 
 # ResSim
 ressim-zip = { strictly = "4.0.0.QA-962-Not_For_Public_Release" }
