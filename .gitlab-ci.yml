@@ -7,12 +7,13 @@ stages:
 build-install-package:
   stage: build
   variables:
-    GRADLE_USER_HOME: .gradle
+    GRADLE_USER_HOME: .gradle-home
   script:
     - ./gradlew showGit wtmpInstaller -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon
   artifacts:
     paths:
       - build/**
+      - .gradle/*
   tags:
     - docker
   cache:
@@ -20,14 +21,15 @@ build-install-package:
       files:
         - gradle/wrapper/gradle-wrapper.properties
     paths:
-      - .gradle/caches/**
-      - .gradle/wrapper/**
+      - .gradle-home/caches/**
+      - .gradle-home/notifications/**
+      - .gradle-home/wrapper/**
 
 
 deploy-to-nexus:
   stage: deploy
   variables:
-    GRADLE_USER_HOME: .gradle
+    GRADLE_USER_HOME: .gradle-home
   script:
     - ./gradlew publish -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon
   dependencies:
@@ -43,5 +45,6 @@ deploy-to-nexus:
       files:
         - gradle/wrapper/gradle-wrapper.properties
     paths:
-      - .gradle/caches/**
-      - .gradle/wrapper/**
+      - .gradle-home/caches/**
+      - .gradle-home/notifications/**
+      - .gradle-home/wrapper/**
