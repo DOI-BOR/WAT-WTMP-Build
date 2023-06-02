@@ -43,4 +43,4 @@ build/*
 .idea/
 
 # Build system Gradle cache
-cache/*
+.gradle-home/*
