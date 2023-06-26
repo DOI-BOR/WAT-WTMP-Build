@@ -6,6 +6,9 @@ usbr-plugin = { strictly = "0.0.49" }
 cequal-plugin = { strictly = "2.1.0" }
 ressim-plugin = { strictly = "2.1.0" }
 
+# ressim gvdl plugin jar
+ressim-gvdl = { strictly = "4.0.0-Beta004" }
+
 # usbr git tool
 usbr-git = { strictly = "3.3.6" }
 
@@ -41,6 +44,7 @@ simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report",
 # wat plugins
 cequal-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-cequalw2", version.ref = "cequal-plugin" }
 ressim-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-ressim-4.0", version.ref = "ressim-plugin" }
+ressim-gvdl = { module = "mil.army.usace.hec.ressim:ressim-gvdl-util", version.ref = "ressim-gvdl" }
 
 jasper-fonts = { module = "gov.usbr:usbr-jasper-fonts", version.ref = "jasper-fonts" }
 

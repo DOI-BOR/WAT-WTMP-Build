@@ -109,6 +109,8 @@ configurations {
     cequalw2_45_exes
     // Extra Jars
     addl_wat_jars
+    // Extra Jars
+    addl_wat_firstparty_jars
     // The USBR WAT Plugins
     usbr_plugins
     // Python Report Generating code
@@ -139,7 +141,10 @@ dependencies {
 
     ressim_install "mil.army.usace.hec.ressim:hec-ressim:${libs.versions.ressim.zip.get()}!!@zip"
 
-    usbr_plugins libs.bundles.usbr.plugins
+    usbr_plugins(libs.bundles.usbr.plugins){
+        exclude group: "mil.army.usace.hec"
+        exclude group: "com.rmanet", module: "rmadev"
+    }
 
     usbr_jasper "usbr.wat.plugins:usbr-actionpanel-jasper:${libs.versions.usbr.plugin.get()}!!@zip"
     addl_wat_jars libs.jasper.fonts
@@ -147,6 +152,11 @@ dependencies {
     // Filtering out Jackson jars from WAT drops this jar, which USBR Plugins do not pull in. Add it back
     addl_wat_jars libs.jackson.json
     addl_wat_jars libs.jarhdf5
+
+    // This is a hack until ResSim publishes a proper Gradle Platform/Maven BOM. This needs to be revisited them.
+    addl_wat_firstparty_jars(libs.ressim.gvdl) {
+        exclude group: '*'
+    }
 
     addl_wat_natives libs.jhdf5.win.x8664
 
@@ -174,7 +184,12 @@ static boolean filterOriginalWatZip(FileVisitDetails fvd) {
             path.contains("hsPlugin-1.1-") || path.contains("sdi-1.1-") ||
             path.contains("pm-1.1-") || path.contains("wat-plugin-ressim-3.5") ||
             // Exclude older Jackson jars that come from WAT, since USBR Plugins include newer Jackson jars
-            (path.contains("jackson-") && path.endsWithIgnoreCase("-2.11.0.jar"))
+            (path.contains("jackson-") && path.endsWithIgnoreCase("-2.11.0.jar")) ||
+            path.contains("gvdl-util")
+}
+
+def getGVDLUtilJarName() {
+    libs.ressim.gvdl.get().module.name + "-" + libs.versions.ressim.gvdl.get() + ".jar"
 }
 
 task assembleInstaller(type: Sync) { task ->
@@ -194,6 +209,7 @@ task assembleInstaller(type: Sync) { task ->
                 }
                 zipTree.includeEmptyDirs = false
                 zipTree.include '**/*.config'
+                zipTree.include '**/*.template'
                 zipTree.filter{ line -> {
                     var updatedLine = line.replaceAll('-Xmx6g', '-Xmx10g')
                     if(updatedLine.contains("-Dapp.Version")) {
@@ -204,6 +220,9 @@ task assembleInstaller(type: Sync) { task ->
                                "# +--------------------------+\n" +
                                "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT\n" + 
                                "vmparam -Dw2.iterative.compute=true")
+                    }
+                    if(updatedLine.contains("gvdl-util")) {
+                        updatedLine = "addjar jar/" + getGVDLUtilJarName()
                     }
                     return updatedLine
                 }}
@@ -224,6 +243,7 @@ task assembleInstaller(type: Sync) { task ->
                 }
                 zipTree.includeEmptyDirs = false
                 zipTree.exclude '**/*.config'
+                zipTree.exclude '**/*.template'
             }
         }
     }
@@ -231,6 +251,13 @@ task assembleInstaller(type: Sync) { task ->
     // Additional jars into WAT/jar (eg Jasper fonts)
     task.into("WTMP/HEC-WAT/jar/sys") { intoDir ->
         from configurations.addl_wat_jars.setTransitive(false).copy()
+        // Plugin dependencies go into jar/sys
+        from configurations.usbr_plugins.setTransitive(true).copyRecursive() - configurations.usbr_plugins.setTransitive(false).copy()
+    }
+
+    // Additional jars into WAT/jar (eg Jasper fonts)
+    task.into("WTMP/HEC-WAT/jar") { intoDir ->
+        from configurations.addl_wat_firstparty_jars.setTransitive(false).copy()
     }
 
     // Additional natives into WAT/lib (eg Jasper fonts)
@@ -243,16 +270,7 @@ task assembleInstaller(type: Sync) { task ->
     // The plugin jars go in jar/ext
     task.into("WTMP/HEC-WAT/jar/ext") { intoDir ->
         from configurations.wat_plugins.setTransitive(false).copy()
-    }
-
-    // The plugin jars go in jar/ext
-    task.into("WTMP/HEC-WAT/jar/ext") { intoDir ->
         from configurations.usbr_plugins.setTransitive(false).copy()
-    }
-
-    // Plugin dependencies go into jar/sys
-    task.into("WTMP/HEC-WAT/jar/sys") { intoDir ->
-        from configurations.usbr_plugins.setTransitive(true).copyRecursive() - configurations.usbr_plugins.setTransitive(false).copy()
     }
 
     task.into("WTMP") { intoDir ->
