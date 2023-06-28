@@ -40,6 +40,7 @@ jarhdf5 = { strictly = "2.11.0" }
 actionpanel-plugin = { module = "usbr.wat.plugins:usbr-actionpanel-plugin", version.ref = "usbr-plugin" }
 comparison-report-plugin = { module = "usbr.wat.plugins:usbr-comparison-report", version.ref = "usbr-plugin" }
 simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report", version.ref = "usbr-plugin" }
+forecast-report-plugin = {module = "usbr.wat.plugins:usbr-forecast-report", version.ref = "usbr-plugin"}
 
 # wat plugins
 cequal-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-cequalw2", version.ref = "cequal-plugin" }
@@ -56,4 +57,4 @@ jarhdf5 = { module = "ncsa.hdf:jarhdf5", version.ref = "jarhdf5" }
 
 [bundles]
 wat-plugins = ["cequal-plugin", "ressim-plugin"]
-usbr-plugins = ["actionpanel-plugin", "comparison-report-plugin", "simulation-report-plugin"]
+usbr-plugins = ["actionpanel-plugin", "comparison-report-plugin", "simulation-report-plugin", "forecast-report-plugin"]
