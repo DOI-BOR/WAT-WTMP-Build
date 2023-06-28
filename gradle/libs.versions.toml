@@ -3,7 +3,7 @@ wat = { strictly = "1.1.0-beta03" }
 
 # wat plugins
 usbr-plugin = { strictly = "0.0.50" }
-cequal-plugin = { strictly = "2.2.1" }
+cequal-plugin = { strictly = "2.2.2" }
 ressim-plugin = { strictly = "2.1.1" }
 
 # ressim gvdl plugin jar
