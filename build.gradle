@@ -219,13 +219,36 @@ task assembleInstaller(type: Sync) { task ->
                                "# | WTMP Specific Parameters |\n" +
                                "# +--------------------------+\n" +
                                "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT\n" + 
-                               "vmparam -Dw2.iterative.compute=true")
+                               "vmparam -Dw2.iterative.compute=true\n" +
+                               "vmparam -Dlogback.configurationFile=./config/properties/logback.xml")
                     }
                     if(updatedLine.contains("gvdl-util")) {
                         updatedLine = "addjar jar/" + getGVDLUtilJarName()
                     }
                     return updatedLine
                 }}
+            }
+        }
+    }
+
+    task.into("WTMP") { intoDir ->
+        configurations.wat_install.asFileTree.each { zipFile ->
+            intoDir.from(zipTree(zipFile)) { zipTree ->
+                zipTree.exclude { fvd -> return filterOriginalWatZip(fvd) }
+                zipTree.eachFile { fcd ->
+                    def segmentList = fcd.relativePath.segments.toList()
+                    // Duplicate HEC-WAT entry
+                    segmentList.remove(1)
+                    fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
+                }
+                zipTree.includeEmptyDirs = false
+                zipTree.include '**/*.properties'
+                zipTree.filter{ line ->
+                    {
+                        var updatedLine = line.replaceAll('FINER', 'INFO').replaceAll('FINEST', 'INFO').replaceAll('FINE', 'INFO')
+                        return updatedLine
+                    }
+                }
             }
         }
     }
@@ -244,8 +267,14 @@ task assembleInstaller(type: Sync) { task ->
                 zipTree.includeEmptyDirs = false
                 zipTree.exclude '**/*.config'
                 zipTree.exclude '**/*.template'
+                zipTree.exclude '**/*.properties'
             }
         }
+    }
+
+    // WTMP-specific addon files
+    task.into("WTMP") { intoDir ->
+        from("install")
     }
 
     // Additional jars into WAT/jar (eg Jasper fonts)
