@@ -13,7 +13,7 @@ ressim-gvdl = { strictly = "4.0.0-Beta004" }
 usbr-git = { strictly = "3.3.6" }
 
 # ResSim
-ressim-zip = { strictly = "4.0.0.24-Beta-win-x86_64" }
+ressim-zip = { strictly = "4.0.0.27-Beta-win-x86_64" }
 
 # jasper fonts jar
 jasper-fonts = { strictly = "1.0" }
