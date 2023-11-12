@@ -1,4 +1,4 @@
-image: eclipse-temurin:8-jdk-jammy
+image: registry.rmanet.app/rma/devops/docker-java-build-image:jdk-8
 
 stages:
   - build
@@ -9,8 +9,6 @@ build-install-package:
   variables:
     GRADLE_USER_HOME: .gradle-home
   script:
-    - apt update
-    - apt install -y git
     - ./gradlew showGit wtmpInstaller -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon
   artifacts:
     paths:
@@ -33,8 +31,6 @@ deploy-to-nexus:
   variables:
     GRADLE_USER_HOME: .gradle-home
   script:
-    - apt update
-    - apt install -y git
     - ./gradlew publish -PnexusUser="$NEXUS_USER" -PnexusPassword="$NEXUS_PASSWORD" -PrmaNexusUser="$RMA_NEXUS_USER" -PrmaNexusPassword="$RMA_NEXUS_PASSWORD" --no-daemon
   dependencies:
     - build-install-package
