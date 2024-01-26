@@ -2,18 +2,18 @@
 wat = { strictly = "1.1.0.13-beta" }
 
 # wat plugins
-usbr-plugin = { strictly = "0.0.73" }
+usbr-plugin = { strictly = "0.0.74" }
 cequal-plugin = { strictly = "2.4.0" }
 ressim-plugin = { strictly = "2.1.9" }
 
 # ressim gvdl plugin jar
-ressim-gvdl = { strictly = "4.0.1.25-Beta" }
+ressim-gvdl = { strictly = "4.0.1.36-Beta" }
 
 # usbr git tool
 usbr-git = { strictly = "3.3.6" }
 
 # ResSim
-ressim-zip = { strictly = "4.0.1.25-Beta-win-x86_64" }
+ressim-zip = { strictly = "4.0.1.36-Beta-win-x86_64" }
 
 # jasper fonts jar
 jasper-fonts = { strictly = "1.0" }
