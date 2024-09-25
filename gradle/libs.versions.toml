@@ -2,7 +2,7 @@
 wat = { strictly = "1.1.0.16-beta" }
 
 # wat plugins
-usbr-plugin = { strictly = "0.0.88" }
+usbr-plugin = { strictly = "0.0.89" }
 cequal-plugin = { strictly = "2.4.1" }
 ressim-plugin = { strictly = "2.1.10" }
 
