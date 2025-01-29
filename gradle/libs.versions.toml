@@ -1,5 +1,5 @@
 [versions]
-wat = { strictly = "1.1.0.30-beta" }
+wat = { strictly = "1.1.0.31-beta" }
 
 # wat plugins
 usbr-plugin = { strictly = "0.0.89" }
