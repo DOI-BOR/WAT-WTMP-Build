@@ -44,6 +44,8 @@ comparison-report-plugin = { module = "usbr.wat.plugins:usbr-comparison-report",
 simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report", version.ref = "usbr-plugin" }
 forecast-report-plugin = {module = "usbr.wat.plugins:usbr-forecast-report", version.ref = "usbr-plugin"}
 
+cequalw2-v5-tcd = { module = "edu.pdx.ce.w2:w2", version = "v5-tcd-2025-09-26"}
+
 # wat plugins
 cequal-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-cequalw2", version.ref = "cequal-plugin" }
 ressim-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-ressim-4.0", version.ref = "ressim-plugin" }

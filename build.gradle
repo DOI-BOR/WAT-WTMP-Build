@@ -107,6 +107,8 @@ configurations {
     cequalw2_TCD_exe
     // Another TCD variant required sometimes
     cequalw2_TCD_0817_exe
+    // v5 TCD variant
+    cequalw2_TCD_v5_exe
     // CeQualW2 4.5 executable set
     cequalw2_45_exes
     // Folsom Exe required by some users
@@ -139,6 +141,11 @@ dependencies {
     cequalw2_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.exe.get()}!!@exe"
     cequalw2_TCD_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.tcd.exe.get()}!!@exe"
     cequalw2_TCD_0817_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.tcd081721.exe.get()}!!@exe"
+    cequalw2_TCD_v5_exe(libs.cequalw2.v5.tcd) {
+        artifact {
+            type = "exe"
+        }
+    }
 
     cequalw2_45_exes "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.v45.exe.get()}!!@exe"
     cequalw2_45_exes "edu.pdx.ce.w2:w2-pre-console:${libs.versions.cequalw2preconsole.v45.exe.get()}!!@exe"
@@ -366,6 +373,7 @@ task assembleInstaller(type: Sync) { task ->
     task.into("WTMP/apps/ceQualW2/exec_45") { intoDir ->
         // These will take whatever name is grabbed out of Nexus
         intoDir.from configurations.cequalw2_45_exes
+        intoDir.from(configurations.cequalw2_TCD_v5_exe)
         intoDir.from(configurations.cequalw2_folsom_exe) { fromFile ->
             // Explicitly named as the WAT Plugin looks for this.
             fromFile.rename { "w2_v45_64_Folsom.exe" }
