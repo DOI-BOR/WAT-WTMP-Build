@@ -381,7 +381,10 @@ task assembleInstaller(type: Sync) { task ->
 
     task.into("WTMP/apps/ceQualW2/exec_50") { intoDir ->
         // These will take whatever name is grabbed out of Nexus
-        intoDir.from(configurations.cequalw2_TCD_v5_exe)
+        intoDir.from(configurations.cequalw2_TCD_v5_exe){ fromFile ->
+            // Explicitly named as the WAT Plugin looks for this.
+            fromFile.rename { "w2_v5tcd09262025.exe" }
+        }
     }
 
     // There will be duplicates between WAT and the plugins. Just ignore them for now.
