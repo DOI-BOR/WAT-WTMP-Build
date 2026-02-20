@@ -2,7 +2,7 @@
 wat = { strictly = "1.1.0.34-beta-win-x86_64" }
 
 # wat plugins
-usbr-plugin = { strictly = "0.0.103" }
+usbr-plugin = "main-SNAPSHOT"
 cequal-plugin = { strictly = "3.0.2" }
 ressim-plugin = { strictly = "2.2.1" }
 
@@ -10,7 +10,7 @@ ressim-plugin = { strictly = "2.2.1" }
 ressim-gvdl = { strictly = "4.0.1.188-Beta" }
 
 # usbr git tool
-usbr-git = { strictly = "3.3.6" }
+usbr-git = "master-SNAPSHOT"
 
 # ResSim
 ressim-zip = { strictly = "4.0.1.188-Beta-win-x86_64" }

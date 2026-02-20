@@ -29,3 +29,137 @@ if(hasProperty('librarySourcesDir')) {
         includeDir(externalDir)
     }
 }
+
+dependencyResolutionManagement {
+
+    // set this so the repositories listed here are preferred
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    repositories {
+        mavenCentral()
+
+        // Route only gov.usbr.wq artifacts to GitHub Packages
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Action-Panel')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Comparison-Report')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Forecast-Report')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Simulation-Report')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/USBR-WAT-Study-Git-Tool')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Jasper-Reporting')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Python-Plotting')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('gov.usbr.wq') }
+        }
+
+        // Route HEC/Nexus artifacts to HEC’s public repository
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'HEC_Nexus'
+                    url = uri('https://www.hec.usace.army.mil/nexus/repository/maven-public')
+                }
+            }
+            filter {
+                includeGroup('mil.army.usace.hec')
+                includeGroup('com.rmanet')
+            }
+        }
+        maven {
+            url 'https://www.hec.usace.army.mil/nexus/repository/hec-internal'
+        }
+        maven {
+            url 'https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/'
+        }
+        maven {
+            /* GeoTools */
+            url 'https://repo.osgeo.org/repository/release/'
+        }
+
+    }
+}

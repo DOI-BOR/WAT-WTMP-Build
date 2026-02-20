@@ -11,28 +11,6 @@ def checkForNexusCredentials() {
     }
 }
 
-repositories {
-    maven {
-        url 'https://www.hec.usace.army.mil/nexus/repository/maven-public'
-    }
-    maven {
-        url 'https://www.hec.usace.army.mil/nexus/repository/hec-internal'
-        credentials {
-            checkForNexusCredentials()
-            username "$nexusUser"
-            password "$nexusPassword"
-        }
-    }
-    mavenCentral()
-    maven {
-        url 'https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/'
-    }
-    maven {
-        /* GeoTools */
-        url 'https://repo.osgeo.org/repository/release/'
-    }
-}
-
 configurations.configureEach {
     // This results in a duplicate jar if anything depends on just plain Jython (eg compile-time needs
     // access to Jython APIs) because WAT uses jython-standalone. Both jython and jython-standalone on
