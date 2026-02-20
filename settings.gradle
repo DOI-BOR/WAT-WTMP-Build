@@ -1,2 +1,31 @@
 rootProject.name = 'wat-wtmp-build'
 
+def includeDir(File externalDir) {
+    if (externalDir.exists()) {
+        def files = externalDir.listFiles()
+        Arrays.sort(files)
+        files.each { file ->
+            if(file.isDirectory()) {
+                def directory = file
+                def dwrBuildExtFile = new File(directory, "dwr-build-ext.gradle")
+                if (dwrBuildExtFile.exists()) {
+                    gradle.ext.externalLibDir = directory
+                    apply from: dwrBuildExtFile
+                }
+            }
+        }
+    }
+}
+
+if(hasProperty('librarySourcesDir')) {
+    def pathsep = System.getProperty("path.separator")
+    if(librarySourcesDir.contains(pathsep)) {
+        librarySourcesDir.split(pathsep).each { path ->
+            def externalDir = new File(path)
+            includeDir(externalDir)
+        }
+    } else {
+        def externalDir = new File("$librarySourcesDir")
+        includeDir(externalDir)
+    }
+}

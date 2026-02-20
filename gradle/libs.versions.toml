@@ -1,5 +1,5 @@
 [versions]
-wat = { strictly = "1.1.0.34-beta" }
+wat = { strictly = "1.1.0.34-beta-win-x86_64" }
 
 # wat plugins
 usbr-plugin = { strictly = "0.0.103" }
@@ -45,6 +45,28 @@ simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report",
 forecast-report-plugin = {module = "usbr.wat.plugins:usbr-forecast-report", version.ref = "usbr-plugin"}
 
 cequalw2-v5-tcd = { module = "edu.pdx.ce.w2:w2", version = "v5-tcd-2025-09-26"}
+
+# WAT Install
+wat-install = { module = "mil.army.usace.hec.wat:wat-install-package-rss-4.0", version.ref = "wat" }
+
+# W2 Exes
+w2-pre = { module = "edu.pdx.ce.w2:w2-pre", version.ref = "w2pre" }
+w2-post = { module = "edu.pdx.ce.w2:w2-post", version.ref = "w2post" }
+cequalw2 = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-exe" }
+cequalw2-tcd = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-tcd-exe" }
+cequalw2-tcd0817 = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-tcd081721-exe" }
+cequalw2-v45 = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-v45-exe" }
+cequalw2preconsole-v45 = { module = "edu.pdx.ce.w2:w2-pre-console", version.ref = "cequalw2preconsole-v45-exe" }
+cequalw2pre-v45 = { module = "edu.pdx.ce.w2:w2-pre", version.ref = "cequalw2pre-v45-exe" }
+cequalw2-folsom = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-folsom-exe" }
+
+# ResSim
+ressim-install = { module = "mil.army.usace.hec.ressim:hec-ressim", version.ref = "ressim-zip" }
+
+# USBR Plugins/Tools
+usbr-actionpanel-jasper = { module = "usbr.wat.plugins:usbr-actionpanel-jasper", version.ref = "usbr-plugin" }
+usbr-actionpanel-python = { module = "usbr.wat.plugins:usbr-actionpanel-python", version.ref = "usbr-plugin" }
+usbr-wtmp-git = { module = "usbr.wat.plugins:usbr-wtmp-git-tool", version.ref = "usbr-git" }
 
 # wat plugins
 cequal-plugin = { module = "mil.army.usace.hec.wat:wat-plugin-cequalw2", version.ref = "cequal-plugin" }

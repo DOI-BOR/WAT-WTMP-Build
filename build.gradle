@@ -1,93 +1,13 @@
-def checkForNexusCredentials() {
-    if(!project.hasProperty('nexusUser')) {
-        println ('Please set the nexusUser property in the GRADLE_USER_HOME ($userHome/.gradle/gradle.properties) file or via -PnexusUser= .')
-    }
-    if(!project.hasProperty('nexusPassword')) {
-        println ('Please set the nexusPassword property in the GRADLE_USER_HOME ($userHome/.gradle/gradle.properties) file or via -PnexusPassword= .')
-    }
-}
-
-def checkForRMANexusCredentials() {
-    if(!project.hasProperty('rmaNexusUser')) {
-        println ('Please set the rmaNexusUser property in the GRADLE_USER_HOME ($userHome/.gradle/gradle.properties) file or via -PrmaNexusUser= .')
-    }
-    if(!project.hasProperty('rmaNexusPassword')) {
-        println ('Please set the rmaNexusPassword property in the GRADLE_USER_HOME ($userHome/.gradle/gradle.properties) file or via -PrmaNexusPassword= .')
-    }
-}
-
 plugins {
-    id "application"
-    id "maven-publish"
-    id "com.palantir.git-version" version "3.0.0"
-    id "org.ajoberstar.grgit" version "4.1.1"
+    id 'wtmp.deps-conventions'
+    id "java"
+    id 'wtmp.versioning-conventions'
+    id 'wtmp.publishing-conventions'
 }
 
-def versionLabel(gitInfo) {
-    def branch = gitInfo.branchName // all branches are snapshots, only tags get released
-    def tag = gitInfo.lastTag
-    // tag is returned as is. Branch may need cleanup
-    return branch == null ? tag : branch.replace("/","-") + "-SNAPSHOT"
-}
-
-group = 'gov.usbr'
-version = versionLabel(versionDetails())
-
-/**
- * When running on the Build System (eg TeamCity) will get BUILD_NUMBER
- * Otherwise, gets the current commit (and status)
- */
-String getBuildID() {
-    if(project.version.contains("-SNAPSHOT")) {
-        def buildNum = System.env.BUILD_NUMBER
-        if (!buildNum?.trim()) {
-            buildNum = "-${grgit.head().abbreviatedId}"
-            def clean = grgit.status().isClean()
-            if (!clean) {
-                buildNum += "+"
-            }
-        } else {
-            buildNum = "." + buildNum
-        }
-        return buildNum
-    } else {
-        // If dirty, return "+"
-        return grgit.status().isClean() ? "" : "+"
-    }
-}
-
-String getShortVersionName() {
-    String shortVersion = project.version
-    if(shortVersion.contains("-SNAPSHOT")) {
-        shortVersion = shortVersion.substring(0, shortVersion.indexOf("-SNAPSHOT"))
-    }
-    return shortVersion
-}
-
-repositories {
-    maven {
-        url 'https://www.hec.usace.army.mil/nexus/repository/maven-public'
-    }
-    maven {
-        url 'https://www.hec.usace.army.mil/nexus/repository/hec-internal'
-        credentials {
-            checkForNexusCredentials()
-            username "$nexusUser"
-            password "$nexusPassword"
-        }
-    }
-    maven {
-        url 'https://artifact.rmanet.app/repository/rma-internal'
-        credentials {
-            checkForRMANexusCredentials()
-            username "$rmaNexusUser"
-            password "$rmaNexusPassword"
-        }
-    }
-    mavenCentral()
-    maven {
-        url 'https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/'
-    }
+allprojects {
+    group = 'gov.usbr'
+    version = versionConventions.getConventionVersion()
 }
 
 configurations {
@@ -129,38 +49,84 @@ configurations {
     addl_wat_natives
 }
 
-// Version definitions relocated to gradle/libs.versions.toml
-
 dependencies {
-    wat_install "mil.army.usace.hec.wat:wat-install-package-rss-4.0:${libs.versions.wat.get()}-win-x86_64@zip"
+    wat_install(libs.wat.install) {
+        artifact {
+            type = "zip"
+        }
+    }
 
     wat_plugins libs.bundles.wat.plugins
 
-    w2_pre_exe "edu.pdx.ce.w2:w2-pre:${libs.versions.w2pre.get()}!!@exe"
-    w2_post_exe "edu.pdx.ce.w2:w2-post:${libs.versions.w2post.get()}!!@exe"
-    cequalw2_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.exe.get()}!!@exe"
-    cequalw2_TCD_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.tcd.exe.get()}!!@exe"
-    cequalw2_TCD_0817_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.tcd081721.exe.get()}!!@exe"
+    w2_pre_exe(libs.w2.pre) {
+        artifact {
+            type = "exe"
+        }
+    }
+    w2_post_exe(libs.w2.post) {
+        artifact {
+            type = "exe"
+        }
+    }
+    cequalw2_exe(libs.cequalw2) {
+        artifact {
+            type = "exe"
+        }
+    }
+    cequalw2_TCD_exe(libs.cequalw2.tcd) {
+        artifact {
+            type = "exe"
+        }
+    }
+    cequalw2_TCD_0817_exe(libs.cequalw2.tcd0817) {
+        artifact {
+            type = "exe"
+        }
+    }
     cequalw2_TCD_v5_exe(libs.cequalw2.v5.tcd) {
         artifact {
             type = "exe"
         }
     }
 
-    cequalw2_45_exes "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.v45.exe.get()}!!@exe"
-    cequalw2_45_exes "edu.pdx.ce.w2:w2-pre-console:${libs.versions.cequalw2preconsole.v45.exe.get()}!!@exe"
-    cequalw2_45_exes "edu.pdx.ce.w2:w2-pre:${libs.versions.cequalw2pre.v45.exe.get()}!!@exe"
+    cequalw2_45_exes(libs.cequalw2.v45) {
+        artifact {
+            type = "exe"
+        }
+    }
+    cequalw2_45_exes(libs.cequalw2preconsole.v45) {
+        artifact {
+            type = "exe"
+        }
+    }
+    cequalw2_45_exes(libs.cequalw2pre.v45) {
+        artifact {
+            type = "exe"
+        }
+    }
 
-    cequalw2_folsom_exe "edu.pdx.ce.w2:w2:${libs.versions.cequalw2.folsom.exe.get()}!!@exe"
+    cequalw2_folsom_exe(libs.cequalw2.folsom) {
+        artifact {
+            type = "exe"
+        }
+    }
 
-    ressim_install "mil.army.usace.hec.ressim:hec-ressim:${libs.versions.ressim.zip.get()}!!@zip"
+    ressim_install(libs.ressim.install) {
+        artifact {
+            type = "zip"
+        }
+    }
 
     usbr_plugins(libs.bundles.usbr.plugins){
         exclude group: "mil.army.usace.hec"
         exclude group: "com.rmanet", module: "rmadev"
     }
 
-    usbr_jasper "usbr.wat.plugins:usbr-actionpanel-jasper:${libs.versions.usbr.plugin.get()}!!@zip"
+    usbr_jasper(libs.usbr.actionpanel.jasper) {
+        artifact {
+            type = "zip"
+        }
+    }
     addl_wat_jars libs.jasper.fonts
 
     // Filtering out Jackson jars from WAT drops this jar, which USBR Plugins do not pull in. Add it back
@@ -174,23 +140,23 @@ dependencies {
 
     addl_wat_natives libs.jhdf5.win.x8664
 
-    usbr_python_report "usbr.wat.plugins:usbr-actionpanel-python:${libs.versions.usbr.plugin.get()}!!@zip"
+    usbr_python_report(libs.usbr.actionpanel.python) {
+        artifact {
+            type = "zip"
+        }
+    }
 
-    usbr_python_git "usbr.wat.plugins:usbr-wtmp-git-tool:${libs.versions.usbr.git.get()}!!@zip"
+    usbr_python_git(libs.usbr.wtmp.git) {
+        artifact {
+            type = "zip"
+        }
+    }
 
     configurations.usbr_plugins.exclude group: "mil.army.usace.hec.wat"
 }
 
-configurations.all {
-    // This results in a duplicate jar if anything depends on just plain Jython (eg compile-time needs
-    // access to Jython APIs) because WAT uses jython-standalone. Both jython and jython-standalone on
-    // the classpath results in script failures. Exclude Jython, in favor of WAT's jython-standalone which
-    // contains a superset of jython.
-    exclude group: 'org.python', module: 'jython'
-}
-
-static boolean filterOriginalWatZip(FileVisitDetails fvd) {
-    // We don't use FIA, HMS, and swap WAT's ResSim 2.5 for ResSim 4.0.
+static boolean filterOriginalWatZip(FileTreeElement fvd) {
+    // We don't use FIA, HMS
     def path = fvd.getRelativePath();
     return path.contains("/apps/") || path.contains("S25FIAPlugin.jar") ||
             path.contains("S10HMSPlugin") || path.contains("S15ResSimPlugin-v3.5") ||
@@ -206,153 +172,155 @@ def getGVDLUtilJarName() {
     libs.ressim.gvdl.get().module.name + "-" + libs.versions.ressim.gvdl.get() + ".jar"
 }
 
-task assembleInstaller(type: Sync) { task ->
+tasks.register("extractWAT", Sync) { sync ->
+    group = "build"
+    description = "Extract the original, unmodified WAT install package which will be used as the WTMP base"
 
-    task.into project.buildDir
+    sync.into(layout.buildDirectory.dir("originalWAT"))
+
+    sync.dependsOn(configurations.wat_install)
+    sync.from { configurations.wat_install.collect { file -> zipTree(file) } }
+}
+
+tasks.register("filterWAT", Sync) { sync ->
+    group = "build"
+    description = "Filter components out of the original WAT install which are not used by WTMP"
+
+    sync.into(layout.buildDirectory.dir("filteredWAT"))
+
+    sync.dependsOn(tasks.named("extractWAT"))
+    sync.from(tasks.named("extractWAT")) { copySpec ->
+        copySpec.exclude { fvd -> filterOriginalWatZip(fvd) }
+        copySpec.eachFile { fcd ->
+            def segmentList = fcd.relativePath.segments.toList()
+            // Duplicate HEC-WAT entry
+            segmentList.remove(0)
+            fcd.relativePath = new RelativePath(true, (String[]) (segmentList.toArray()))
+        }
+        copySpec.includeEmptyDirs = false
+    }
+}
+
+tasks.register("extractResSim", Sync) { sync ->
+    group = "build"
+    description = "Extract the original, unmodified ResSim build that will be included in WTMP"
+
+    sync.into(layout.buildDirectory.dir("originalRSS"))
+
+    sync.dependsOn(configurations.ressim_install)
+    sync.from { configurations.ressim_install.collect { file -> zipTree(file) } }
+}
+
+def extraFilesSourceSet = objects.sourceDirectorySet("extraInstallFiles", "extraInstallFiles")
+extraFilesSourceSet.srcDir("src/main/install")
+
+tasks.register("assembleInstaller", Sync) { task ->
+    group = 'application'
+    description = 'Build the WTMP Installer Package'
+
+    task.into layout.buildDirectory.dir("WTMP")
+
+    task.dependsOn(tasks.named("filterWAT"))
+    task.dependsOn(configurations.usbr_python_report)
+    task.dependsOn(configurations.usbr_jasper)
+    task.dependsOn(configurations.usbr_python_git)
+    task.dependsOn(extraFilesSourceSet)
 
     // The base WAT installer
-    task.into("WTMP") { intoDir ->
-        configurations.wat_install.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipTree ->
-                zipTree.exclude { fvd -> return filterOriginalWatZip(fvd) }
-                zipTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    // Duplicate HEC-WAT entry
-                    segmentList.remove(1)
-                    fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
-                }
-                zipTree.includeEmptyDirs = false
-                zipTree.include '**/*.config'
-                zipTree.include '**/*.template'
-                zipTree.filter{ line -> {
+    task.into(".") { copySpec ->
+        // WAT without config files that need edited
+        copySpec.from(tasks.named("filterWAT")) { filteredWatSpec ->
+            filteredWatSpec.exclude '**/*.config'
+            filteredWatSpec.exclude '**/*.template'
+            filteredWatSpec.exclude '**/*.properties'
+        }
+        // Copy the config / template files that get modified
+        copySpec.from(tasks.named("filterWAT")) { filteredWatSpec ->
+            filteredWatSpec.include '**/*.config'
+            filteredWatSpec.include '**/*.template'
+            filteredWatSpec.filter { line ->
+                {
                     var updatedLine = line.replaceAll('-Xmx6g', '-Xmx10g')
-                    if(updatedLine.contains("-Dapp.Version")) {
+                    if (updatedLine.contains("-Dapp.Version")) {
                         // app.version is the last line in WAT config, so append this to the end
-                       updatedLine += ("\n\n" +
-                               "# +--------------------------+\n" +
-                               "# | WTMP Specific Parameters |\n" +
-                               "# +--------------------------+\n" +
-                               "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT\n" + 
-                               "vmparam -Dw2.iterative.compute=true\n" +
-                               "vmparam -Dlogback.configurationFile=./config/properties/logback.xml\n" +
-                               "vmparam -DEnableSkipModelsMenu=true\n" +
-                               "#vmparam -DWTMP.HasUpdateData=true\n" +
-                               "#vmparam -DWTMP.HasGit=true")
+                        updatedLine += ("\n\n" +
+                                "# +--------------------------+\n" +
+                                "# | WTMP Specific Parameters |\n" +
+                                "# +--------------------------+\n" +
+                                "vmparam -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT\n" +
+                                "vmparam -Dw2.iterative.compute=true\n" +
+                                "vmparam -Dlogback.configurationFile=./config/properties/logback.xml\n" +
+                                "vmparam -DEnableSkipModelsMenu=true\n" +
+                                "#vmparam -DWTMP.HasUpdateData=true\n" +
+                                "#vmparam -DWTMP.HasGit=true")
                     }
-                    if(updatedLine.contains("gvdl-util")) {
+                    if (updatedLine.contains("gvdl-util")) {
                         updatedLine = "addjar jar/" + getGVDLUtilJarName()
                     }
                     return updatedLine
-                }}
-            }
-        }
-    }
-
-    task.into("WTMP") { intoDir ->
-        configurations.wat_install.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipTree ->
-                zipTree.exclude { fvd -> return filterOriginalWatZip(fvd) }
-                zipTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    // Duplicate HEC-WAT entry
-                    segmentList.remove(1)
-                    fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
-                }
-                zipTree.includeEmptyDirs = false
-                zipTree.include '**/*.properties'
-                zipTree.filter{ line ->
-                    {
-                        var updatedLine = line.replaceAll('FINER', 'INFO').replaceAll('FINEST', 'INFO').replaceAll('FINE', 'INFO')
-                        return updatedLine
-                    }
                 }
             }
         }
-    }
-
-    // The base WAT installer
-    task.into("WTMP") { intoDir ->
-        configurations.wat_install.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipTree ->
-                zipTree.exclude { fvd -> return filterOriginalWatZip(fvd) }
-                zipTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    // Duplicate HEC-WAT entry
-                    segmentList.remove(1)
-                    fcd.relativePath = new RelativePath(true, (String[])(segmentList.toArray()))
+        // Copy the properties files that get modified
+        copySpec.from(tasks.named("filterWAT")) { filteredWatSpec ->
+            filteredWatSpec.include '**/*.properties'
+            filteredWatSpec.filter { line ->
+                {
+                    var updatedLine = line.replaceAll('FINER', 'INFO').replaceAll('FINEST', 'INFO').replaceAll('FINE', 'INFO')
+                    return updatedLine
                 }
-                zipTree.includeEmptyDirs = false
-                zipTree.exclude '**/*.config'
-                zipTree.exclude '**/*.template'
-                zipTree.exclude '**/*.properties'
             }
         }
+        // WTMP-specific addon files
+        from(extraFilesSourceSet)
+
+        copySpec.from { configurations.usbr_python_report.collect { file -> zipTree(file) } }
+        copySpec.from { configurations.usbr_jasper.collect { file -> zipTree(file) } }
+        copySpec.from { configurations.usbr_python_git.collect { file -> zipTree(file) } }
     }
 
-    // WTMP-specific addon files
-    task.into("WTMP") { intoDir ->
-        from("install")
+    task.dependsOn(configurations.addl_wat_firstparty_jars)
+    task.into("HEC-WAT/jar") { copySpec ->
+        from configurations.addl_wat_firstparty_jars.copy()
     }
 
-    // Additional jars into WAT/jar (eg Jasper fonts)
-    task.into("WTMP/HEC-WAT/jar/sys") { intoDir ->
-        from configurations.addl_wat_jars.setTransitive(false).copy()
+    task.dependsOn(configurations.addl_wat_jars)
+    task.dependsOn(configurations.usbr_plugins)
+    task.into("HEC-WAT/jar/sys") { copySpec ->
+        // Additional jars into WAT/jar (eg Jasper fonts)
+        copySpec.from configurations.addl_wat_jars.copy().setTransitive(false)
         // Plugin dependencies go into jar/sys
-        from configurations.usbr_plugins.setTransitive(true).copyRecursive() - configurations.usbr_plugins.setTransitive(false).copy()
+        copySpec.from configurations.usbr_plugins.copyRecursive().setTransitive(true) - configurations.usbr_plugins.copy().setTransitive(false)
     }
 
-    // Additional jars into WAT/jar (eg Jasper fonts)
-    task.into("WTMP/HEC-WAT/jar") { intoDir ->
-        from configurations.addl_wat_firstparty_jars.setTransitive(false).copy()
+    task.dependsOn(configurations.wat_plugins)
+    // The plugin jars go in jar/ext
+    task.into("HEC-WAT/jar/ext") { intoDir ->
+        from { configurations.wat_plugins.copy().setTransitive(false) }
+        from { configurations.usbr_plugins.copy().setTransitive(false) }
     }
 
     // Additional natives into WAT/lib (eg Jasper fonts)
-    task.into("WTMP/HEC-WAT/lib") { intoDir ->
-        configurations.addl_wat_natives.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile))
-        }
+    task.dependsOn(configurations.addl_wat_natives)
+    task.into("HEC-WAT/lib") { copySpec ->
+        copySpec.from { configurations.addl_wat_natives.collect { file -> zipTree(file) } }
     }
 
-    // The plugin jars go in jar/ext
-    task.into("WTMP/HEC-WAT/jar/ext") { intoDir ->
-        from configurations.wat_plugins.setTransitive(false).copy()
-        from configurations.usbr_plugins.setTransitive(false).copy()
-    }
-
-    task.into("WTMP") { intoDir ->
-        configurations.usbr_python_report.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile))
-        }
-    }
-
-    task.into("WTMP") { intoDir ->
-        configurations.usbr_jasper.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile))
-        }
-    }
-
-    task.into("WTMP") { intoDir ->
-        configurations.usbr_python_git.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile))
-        }
-    }
-
+    task.dependsOn(tasks.named("extractResSim"))
     // The right version of ResSim
-    task.into("WTMP/apps/HEC-ResSim") { intoDir ->
-        configurations.ressim_install.asFileTree.each { zipFile ->
-            intoDir.from(zipTree(zipFile)) { zipFileTree ->
-                zipFileTree.eachFile { fcd ->
-                    def segmentList = fcd.relativePath.segments.toList()
-                    // Duplicate HEC-ResSim entry
-                    segmentList.remove(3)
-                    fcd.relativePath = new RelativePath(true, (String[]) (segmentList.toArray()))
-                }
-                zipFileTree.includeEmptyDirs = false
+    task.into("apps/HEC-ResSim") { intoDir ->
+         intoDir.from(tasks.named("extractResSim")) { rssCopySpec ->
+            rssCopySpec.eachFile { fcd ->
+                def segmentList = fcd.relativePath.segments.toList()
+                // Duplicate HEC-ResSim entry
+                segmentList.remove(2)
+                fcd.relativePath = new RelativePath(true, (String[]) (segmentList.toArray()))
             }
+            rssCopySpec.includeEmptyDirs = false
         }
     }
 
-    task.into("WTMP/apps/ceQualW2/exe") { intoDir ->
+    task.into("apps/ceQualW2/exe") { intoDir ->
         // These will take whatever name is grabbed out of Nexus
         intoDir.from configurations.cequalw2_exe
         intoDir.from configurations.cequalw2_TCD_exe
@@ -370,7 +338,7 @@ task assembleInstaller(type: Sync) { task ->
         }
     }
 
-    task.into("WTMP/apps/ceQualW2/exec_45") { intoDir ->
+    task.into("apps/ceQualW2/exec_45") { intoDir ->
         // These will take whatever name is grabbed out of Nexus
         intoDir.from configurations.cequalw2_45_exes
         intoDir.from(configurations.cequalw2_folsom_exe) { fromFile ->
@@ -379,7 +347,7 @@ task assembleInstaller(type: Sync) { task ->
         }
     }
 
-    task.into("WTMP/apps/ceQualW2/exec_50") { intoDir ->
+    task.into("apps/ceQualW2/exec_50") { intoDir ->
         // These will take whatever name is grabbed out of Nexus
         intoDir.from(configurations.cequalw2_TCD_v5_exe){ fromFile ->
             // Explicitly named as the WAT Plugin looks for this.
@@ -391,13 +359,16 @@ task assembleInstaller(type: Sync) { task ->
     task.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
-task wtmpInstaller(type: Zip){
-    dependsOn assembleInstaller
+tasks.register("zipWtmpInstaller", Zip){
+    group = 'application'
+    description = 'Assembles and Zips the WTMP Install'
 
-    from 'build/WTMP'
+    dependsOn tasks.named("assembleInstaller")
+
+    from tasks.named("assembleInstaller")
 
     def baseName = 'WTMP'
-    def version_no_platform = getShortVersionName() + getBuildID()
+    def version_no_platform = versionConventions.getShortVersionName() + versionConventions.getBuildID()
     def version = version_no_platform + "-win-x86_64"
 
     destinationDirectory = file("$buildDir")
@@ -415,59 +386,16 @@ task wtmpInstaller(type: Zip){
     }
 }
 
-/**
- * To help people understand how the versioning
- * interacts with the git repo
- */
-task showGit () {
-    doFirst {
-        def gitInfo = versionDetails()
-        println( "Used:    " + getVersion() ) // The select version (the project.version field)
-        println( "Tag:     " + gitInfo.lastTag) // actual tag or commit hash(short) if no tag
-        println( "Hash:    " + gitInfo.gitHash) // short commit hash
-        println( "Branch:  " + gitInfo.branchName) // branch name (null if tag checkout)
-        println( "TagBuild:" + gitInfo.isCleanTag) // true if repoi is in dettached head mode(e.g. git checkout <tag>)
-    }
-}
-
-configure(assembleInstaller) {
-    group = 'application'
-    description = 'Assembles the WTMP Install for local testing.'
-}
-
-configure(wtmpInstaller) {
-    group = 'application'
-    description = 'Build the WTMP Installer Package'
-}
-
-configure(showGit) {
-    group = 'help'
-    description = 'Shows Git Tag Versioning information'
-}
-
 publishing {
     publications {
         maven(MavenPublication) {
             artifactId = "usbr-wtmp-package"
-            def verWithExt = getShortVersionName() + "-win-x86_64"
+            def verWithExt = versionConventions.getShortVersionName() + "-win-x86_64"
             if(project.version.contains("SNAPSHOT")) {
                 verWithExt += "-SNAPSHOT"
             }
             it.version = verWithExt
-            artifact source: wtmpInstaller, extension: 'zip'
-        }
-    }
-    repositories {
-        maven {
-            credentials {
-                username = project.hasProperty('rmaNexusUser') ? "$rmaNexusUser" : "defaultUser"
-                password = project.hasProperty('rmaNexusPassword') ? "$rmaNexusPassword" : "defaultPassword"
-            }
-            afterEvaluate {
-                url = version.toString().endsWith("SNAPSHOT") ?
-                        "https://does-not-publish-snapshots.invalid/url" :
-                        "https://artifact.rmanet.app/repository/usbr-releases/"
-            }
+            artifact source: zipWtmpInstaller, extension: 'zip'
         }
     }
 }
