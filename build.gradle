@@ -398,16 +398,4 @@ publishing {
             artifact source: zipWtmpInstaller, extension: 'zip'
         }
     }
-
-    // publish to github packages
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/DOI-BOR/WAT-WTMP-Build")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }
