@@ -7,13 +7,13 @@ cequal-plugin = { strictly = "3.0.2" }
 ressim-plugin = { strictly = "2.2.1" }
 
 # ressim gvdl plugin jar
-ressim-gvdl = { strictly = "4.0.1.188-Beta" }
+ressim-gvdl = { strictly = "4.0.1" }
 
 # usbr git tool
 usbr-git = "master-SNAPSHOT"
 
 # ResSim
-ressim-zip = { strictly = "4.0.1.188-Beta-win-x86_64" }
+ressim-zip = { strictly = "4.0.1-win-x86_64" }
 
 # jasper fonts jar
 jasper-fonts = { strictly = "1.0" }
