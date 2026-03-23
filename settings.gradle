@@ -136,6 +136,20 @@ dependencyResolutionManagement {
             filter { includeModule('usbr.wat.plugins', 'usbr-actionpanel-python') }
         }
 
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Jasper-Fonts')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeModule('gov.usbr', 'usbr-jasper-fonts') }
+        }
+
         maven {
             name = 'HEC_WAT_Releases'
             url = uri('https://www.hec.usace.army.mil/nexus/repository/wat-releases')
