@@ -136,6 +136,76 @@ dependencyResolutionManagement {
             filter { includeModule('usbr.wat.plugins', 'usbr-actionpanel-python') }
         }
 
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Jasper-Fonts')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeModule('gov.usbr', 'usbr-jasper-fonts') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/Merlin-Web-Client')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeModule('gov.usbr.wq', 'merlin-web-client') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/Merlin-To-HEC')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeModule('gov.usbr.wq', 'merlin-data-exchange') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-Git-Library')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeModule('usbr.wat.plugins', 'usbr-git-library') }
+        }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = 'GitHubPackages'
+                    url = uri('https://maven.pkg.github.com/doi-bor/WTMP-W2-Executables')
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+            filter { includeGroup('edu.pdx.ce.w2') }
+        }
+
         maven {
             name = 'HEC_WAT_Releases'
             url = uri('https://www.hec.usace.army.mil/nexus/repository/wat-releases')
