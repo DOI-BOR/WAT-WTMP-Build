@@ -60,17 +60,20 @@ dependencies {
 
     w2_pre_exe(libs.w2.pre) {
         artifact {
-            type = "exe"
+            classifier = "exe"
+            extension  = "exe"
         }
     }
     w2_post_exe(libs.w2.post) {
         artifact {
-            type = "exe"
+            classifier = "exe"
+            extension  = "exe"
         }
     }
     cequalw2_exe(libs.cequalw2) {
         artifact {
-            type = "exe"
+            classifier = "exe"
+            extension  = "exe"
         }
     }
     cequalw2_TCD_exe(libs.cequalw2.tcd) {
@@ -96,7 +99,8 @@ dependencies {
     }
     cequalw2_45_exes(libs.cequalw2preconsole.v45) {
         artifact {
-            type = "exe"
+            classifier = "exe"
+            extension  = "exe"
         }
     }
     cequalw2_45_exes(libs.cequalw2pre.v45) {

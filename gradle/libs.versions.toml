@@ -19,15 +19,15 @@ ressim-zip = { strictly = "4.0.1-win-x86_64" }
 jasper-fonts = { strictly = "1.0" }
 
 # W2 natives
-w2pre = { strictly = "4.0-win-x86_64:exe@exe" }
-w2post = { strictly = "3.0-win-x86_64:exe@exe" }
-cequalw2-exe = { strictly = "4.0-win-x86_64:exe@exe" }
+w2pre = { strictly = "4.0-win-x86_64" }
+w2post = { strictly = "3.0-win-x86_64" }
+cequalw2-exe = { strictly = "4.0-win-x86_64" }
 cequalw2-tcd-exe = { strictly = "4.1-TCD-mp-win-x86_64" }
 cequalw2-tcd081721-exe = { strictly = "TCD-081721" }
 cequalw2-folsom-exe = { strictly = "4.5-64-Folsom" }
 
 cequalw2-v45-exe = { strictly = "4.5-win-x86_64" }
-cequalw2preconsole-v45-exe = { strictly = "4.5-win-x86_64:exe@exe" }
+cequalw2preconsole-v45-exe = { strictly = "4.5-win-x86_64" }
 cequalw2pre-v45-exe = { strictly = "4.5-win-x86_64" }
 
 jackson-version = { strictly = "2.13.0" }
