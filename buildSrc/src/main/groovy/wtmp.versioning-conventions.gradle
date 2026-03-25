@@ -7,12 +7,10 @@ plugins {
     id "org.ajoberstar.grgit"
 }
 
-def dateVersion() {
-    def fmt = DateTimeFormatter.ofPattern("yyyy.MM.dd") // format: YYYY.MM.DD
-    return LocalDate.now().format(fmt)
+def getConventionVersion() {
+    def fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd") // format: YYYY-MM-DD
+    return "v" + LocalDate.now().format(fmt)
 }
-
-version = dateVersion()
 
 tasks.register("showGit") {
     doFirst {
@@ -26,10 +24,6 @@ tasks.register("showGit") {
 }
 
 String getShortVersionName() {
-    return project.version.toString()
-}
-
-String getConventionVersion() {
     return project.version.toString()
 }
 
