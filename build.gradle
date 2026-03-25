@@ -378,7 +378,7 @@ tasks.register("zipWtmpInstaller", Zip){
     from tasks.named("assembleInstaller")
 
     def baseName = 'WTMP'
-    def version_no_platform = versionConventions.getShortVersionName() + versionConventions.getBuildID()
+    def version_no_platform = versionConventions.getShortVersionName()
     def version = version_no_platform + "-win-x86_64"
 
     destinationDirectory = file("$buildDir")
