@@ -1,7 +1,18 @@
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+
 plugins {
     id "com.palantir.git-version"
     id "org.ajoberstar.grgit"
 }
+
+def dateVersion() {
+    def fmt = DateTimeFormatter.ofPattern("yyyy.MM.dd") // format: YYYY.MM.DD
+    return LocalDate.now().format(fmt)
+}
+
+version = dateVersion()
 
 tasks.register("showGit") {
     doFirst {
@@ -14,49 +25,16 @@ tasks.register("showGit") {
     }
 }
 
-def versionLabel(gitInfo) {
-    def branch = gitInfo.branchName // all branches are snapshots, only tags get released
-    if (branch == null && !"$System.env.CI_COMMIT_BRANCH".isEmpty()) {
-        branch = "$System.env.CI_COMMIT_BRANCH" // Gitlab CI checks out a commit, not a branch. Grab the branch name from the env vars it sets
-    }
-    def tag = gitInfo.lastTag
-    // tag is returned as is. Branch may need cleanup
-    return (branch == null || branch == "null" || branch.isEmpty()) ? tag : branch.replace("/","-") + "-SNAPSHOT"
-}
-
-/**
- * When running on the Build System (eg TeamCity) will get BUILD_NUMBER
- * Otherwise, gets the current commit (and status)
- */
-String getBuildID() {
-    if(project.version.contains("-SNAPSHOT")) {
-        def buildNum = System.env.BUILD_NUMBER
-        if (!buildNum?.trim()) {
-            buildNum = "-${grgit.head().abbreviatedId}"
-            def clean = grgit.status().isClean()
-            if (!clean) {
-                buildNum += "+"
-            }
-        } else {
-            buildNum = "." + buildNum
-        }
-        return buildNum
-    } else {
-        // If dirty, return "+"
-        return grgit.status().isClean() ? "" : "+"
-    }
-}
-
 String getShortVersionName() {
-    String shortVersion = project.version
-    if(shortVersion.contains("-SNAPSHOT")) {
-        shortVersion = shortVersion.substring(0, shortVersion.indexOf("-SNAPSHOT"))
-    }
-    return shortVersion
+    return project.version.toString()
 }
 
 String getConventionVersion() {
-    return versionLabel(versionDetails())
+    return project.version.toString()
+}
+
+String getBuildID() {
+    return project.version.toString()
 }
 
 project.getExtensions().add("versionConventions", this)

@@ -2,7 +2,7 @@
 wat = { strictly = "1.1.0.34-beta-win-x86_64" }
 
 # wat plugins
-usbr-plugin = "main-SNAPSHOT"
+usbr-plugin = "2026.03.25"
 cequal-plugin = { strictly = "3.0.2" }
 ressim-plugin = { strictly = "2.2.1" }
 
@@ -10,13 +10,13 @@ ressim-plugin = { strictly = "2.2.1" }
 ressim-gvdl = { strictly = "4.0.1" }
 
 # usbr git tool
-usbr-git = "master-SNAPSHOT"
+usbr-git = "2026.03.25"
 
 # ResSim
 ressim-zip = { strictly = "4.0.1-win-x86_64" }
 
 # jasper fonts jar
-jasper-fonts = { strictly = "1.0" }
+jasper-fonts = { strictly = "2026.03.25" }
 
 # W2 natives
 w2pre = { strictly = "4.0-win-x86_64" }
