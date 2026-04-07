@@ -3,6 +3,8 @@ wat = { strictly = "1.1.0.34-beta-win-x86_64" }
 
 # wat plugins
 usbr-plugin = "2026.03.25"
+usbr-python = "2026.04.07"
+usbr-jasper = "2026.03.25"
 cequal-plugin = { strictly = "3.0.2" }
 ressim-plugin = { strictly = "2.2.1" }
 
@@ -64,8 +66,8 @@ cequalw2-folsom = { module = "edu.pdx.ce.w2:w2", version.ref = "cequalw2-folsom-
 ressim-install = { module = "mil.army.usace.hec.ressim:hec-ressim", version.ref = "ressim-zip" }
 
 # USBR Plugins/Tools
-usbr-actionpanel-jasper = { module = "usbr.wat.plugins:usbr-actionpanel-jasper", version.ref = "usbr-plugin" }
-usbr-actionpanel-python = { module = "usbr.wat.plugins:usbr-actionpanel-python", version.ref = "usbr-plugin" }
+usbr-actionpanel-jasper = { module = "usbr.wat.plugins:usbr-actionpanel-jasper", version.ref = "usbr-python" }
+usbr-actionpanel-python = { module = "usbr.wat.plugins:usbr-actionpanel-python", version.ref = "usbr-jasper" }
 usbr-wtmp-git = { module = "usbr.wat.plugins:usbr-wtmp-git-tool", version.ref = "usbr-git" }
 
 # wat plugins
