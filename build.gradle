@@ -406,6 +406,7 @@ publishing {
             }
             it.version = verWithExt
             artifact source: zipWtmpInstaller, extension: 'zip'
+            sleep(30000)
         }
     }
 }
