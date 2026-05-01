@@ -1,8 +1,11 @@
 [versions]
-wat = { strictly = "1.1.0.34-beta-win-x86_64" }
+wat = { strictly = "1.1.0.0-win-x86_64" }
 
 # wat plugins
-usbr-plugin = "2026.03.25"
+usbr-action-panel = "2026.05.01"
+usbr-comparison-report = "2026.05.01"
+usbr-forecast-report = "2026.05.01"
+usbr-simulation-report = "2026.05.01"
 usbr-python = "2026.04.07"
 usbr-jasper = "2026.03.25"
 cequal-plugin = { strictly = "3.0.2" }
@@ -41,10 +44,10 @@ jarhdf5 = { strictly = "2.11.0" }
 
 [libraries]
 # usbr plugins
-actionpanel-plugin = { module = "usbr.wat.plugins:usbr-actionpanel-plugin", version.ref = "usbr-plugin" }
-comparison-report-plugin = { module = "usbr.wat.plugins:usbr-comparison-report", version.ref = "usbr-plugin" }
-simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report", version.ref = "usbr-plugin" }
-forecast-report-plugin = {module = "usbr.wat.plugins:usbr-forecast-report", version.ref = "usbr-plugin"}
+actionpanel-plugin = { module = "usbr.wat.plugins:usbr-actionpanel-plugin", version.ref = "usbr-action-panel" }
+comparison-report-plugin = { module = "usbr.wat.plugins:usbr-comparison-report", version.ref = "usbr-comparison-report" }
+simulation-report-plugin = { module = "usbr.wat.plugins:usbr-simulation-report", version.ref = "usbr-simulation-report" }
+forecast-report-plugin = {module = "usbr.wat.plugins:usbr-forecast-report", version.ref = "usbr-forecast-report"}
 
 cequalw2-v5-tcd = { module = "edu.pdx.ce.w2:w2", version = "v5-tcd-2025-09-26"}
 
