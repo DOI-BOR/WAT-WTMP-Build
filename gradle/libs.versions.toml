@@ -2,10 +2,10 @@
 wat = { strictly = "1.1.0.0-win-x86_64" }
 
 # wat plugins
-usbr-action-panel = "2026.05.01"
-usbr-comparison-report = "2026.05.01"
-usbr-forecast-report = "2026.05.01"
-usbr-simulation-report = "2026.05.01"
+usbr-action-panel = "2026.07.08"
+usbr-comparison-report = "2026.07.15"
+usbr-forecast-report = "2026.07.15"
+usbr-simulation-report = "2026.07.15"
 usbr-python = "2026.04.07"
 usbr-jasper = "2026.03.25"
 cequal-plugin = { strictly = "3.0.2" }
