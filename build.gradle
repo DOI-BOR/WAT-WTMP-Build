@@ -360,6 +360,21 @@ tasks.register("assembleInstaller", Sync) { task ->
     task.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
 
+tasks.named("assembleInstaller").configure { task ->
+    task.doLast {
+        def loggingProperties = new File(task.destinationDir, "HEC-WAT/config/properties/logging.properties")
+
+        loggingProperties << ("\n\n" +
+                "# +--------------------------+\n" +
+                "# | WTMP Specific Flags      |\n" +
+                "# +--------------------------+\n" +
+                "log4j.logger.org.apache.commons.digester=error\n" +
+                "log4j.logger.org.apache.commons.beanutils=error\n" + 
+				"log4j.logger.net.sf.jasperreports.engine=error\n" + 
+				"log4j.logger.net.sf.jasperreports.extensions=error\n")
+    }
+}
+
 tasks.register("zipWtmpInstaller", Zip){
     group = 'application'
     description = 'Assembles and Zips the WTMP Install'
